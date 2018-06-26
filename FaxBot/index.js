@@ -22,9 +22,9 @@ fs.readdir("./commands/", (err, files) => {
 // Displays the message in console
 bot.on("ready", async () => {
     console.log(`${bot.user.username} is online and ready to kill!`);
-    bot.user.setActivity("FAXES Videos", {type: "WATCHING"});
+    bot.user.setActivity("You.", {type: "WATCHING"});
 
-    bot.user.setStatus('dnd') // Online, idle, invisible & dnd
+    bot.user.setStatus('Online') // Online, idle, invisible & dnd
 });
 // Bot Start
 bot.on("message", async message => {
@@ -69,6 +69,20 @@ bot.on('guildMemberRemove', member => {
     if (!channel) return;
     // Send the message, mentioning the member
     channel.send(`Thanks for stopping by, ${member}. `);
+});
+
+bot.on("messageDelete", message => {
+    // messageDelete.channel.send(`The message : "${messageDelete.content}" by ${messageDelete.author.tag} was deleted.`)
+
+    let deleteEmbed = new Discord.RichEmbed()
+    .setDescription("User Removed A Message")
+    .setColor("#00fff2")
+    .addField("Message Content", message.content)
+    .addField("Channel", message.channel)
+    .addField("Message By", message.author.tag)
+    .setFooter("© Example", message.createdAt)
+    let deleteschannel = message.guild.channels.find(`name`, "log-channel");
+    message.deleteschannel.send(deleteEmbed);
 });
 
 bot.login(botconfig.token);
