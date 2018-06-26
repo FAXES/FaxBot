@@ -13,7 +13,7 @@ module.exports.run = async (bot, message, args) => {
     .addField("Uptime", "Use Command: uptime")
     .addField("Bot Created On", bot.user.createdAt);
 
-    return message.channel.send(botembed);
+    message.channel.send(botembed);
 }
 
 module.exports.help = {
