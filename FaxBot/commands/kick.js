@@ -1,6 +1,7 @@
 const Discord = require("discord.js")
 
 module.exports.run = async (bot, message, args) => {
+    message.delete();
     let kUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
         if(!kUser) return message.channel.send(" Haha, what a name, maybe try a real one?");
         let kReason = args.join(" ").slice(22);
@@ -14,13 +15,14 @@ module.exports.run = async (bot, message, args) => {
         .addField("Kicked By", `<@${message.author.id}> with ID ${message.author.id}`)
         .addField("Kicked In", message.channel)
         .addField("Time", message.createdAt)
-        .addField("Reason", kReason);
+        .addField("Reason", `${kReason}.`);
 
         let kickChannel = message.guild.channels.find(`name`, "mod-chat");
         if(!kickChannel) return message.channel.send("Can't find channel.");
 
         message.guild.member(kUser).kick(kReason);
         kickChannel.send(kickEmbed);
+        message.channel.send(`:white_check_mark: ${kUser} **has been kicked from the Discord.**`).then(msg => msg.delete(6000));
 }
 
 module.exports.help = {

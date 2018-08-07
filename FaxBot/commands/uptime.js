@@ -1,26 +1,26 @@
 const Discord = require("discord.js")
 
 module.exports.run = async (bot, message, args) => {
-    let messageup = new Discord.RichEmbed()
-    const totalSeconds = process.uptime();
-    const days = Math.floor((totalSeconds % 31536000) / 86400);
-    const hours = parseInt(totalSeconds / 3600) % 24;
-    const minutes = parseInt(totalSeconds / 60) % 60;
-    const seconds = Math.floor(totalSeconds % 60);
-    messageup += days >= 1 ? `${days}d ` : '';
-    messageup += hours < 10 ? `0${hours}:` : `${hours}:`;
-    messageup += minutes < 10 ? `0${minutes}:` : `${minutes}:`;
-    messageup += seconds < 10 ? `0${seconds}` : `${seconds}`;
+    message.delete();
+    let totalSeconds = (bot.uptime / 1000);
+    let hours = Math.floor(totalSeconds / 3600);
+    totalSeconds %= 3600;
+    let minutes = Math.floor(totalSeconds / 60);
+    let seconds = totalSeconds % 60;
 
+    // let uptime = `${hours} hours, ${minutes} minutes`;
+
+    // return message.channel.send(uptime);
 
     let uptimeEmbed = new Discord.RichEmbed()
-        .setDescription("**FaxBot Uptime**")
-        .setColor("#00fff2")
-        .addField("Hours", messageup.hours)
-        .addField("Minutes", messageup.minutes)
-        .addField("Seconds", messageup.seconds);
-
-        message.channel.send(uptimeEmbed);
+    .setDescription("Fax Bot Uptime")
+    .setColor("#fef836")
+    .addField("Hours", hours)
+    .addField("Minutes", minutes)
+    .setTimestamp()
+    .setFooter("© 2018 FAXES, All Rights Reserved")
+    
+    message.channel.send(uptimeEmbed).then(msg => msg.delete(10000));
 }
 
 module.exports.help = {

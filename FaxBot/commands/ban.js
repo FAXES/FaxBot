@@ -1,6 +1,7 @@
 const Discord = require("discord.js")
 
 module.exports.run = async (bot, message, args) => {
+    message.delete();
     let bUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
         if(!bUser) return message.channel.send(" Haha, what a name, maybe try a real one?");
         let bReason = args.join(" ").slice(22);
@@ -14,12 +15,12 @@ module.exports.run = async (bot, message, args) => {
         .addField("Banned By", `<@${message.author.id}> with ID ${message.author.id}`)
         .addField("Banned In", message.channel)
         .addField("Time", message.createdAt)
-        .addField("Reason", bReason);
+        .addField("Reason", `${bReason}.`);
 
         let banChannel = message.guild.channels.find(`name`, "mod-chat");
         if(!banChannel) return message.channel.send("Can't find channel.");
 
-
+        message.channel.send(`:white_check_mark: ${bUser} **has been banned from the Discord.**`).then(msg => msg.delete(6000));
         message.guild.member(bUser).ban(bReason);
         banChannel.send(banEmbed)
 }
