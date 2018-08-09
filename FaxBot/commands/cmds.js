@@ -1,8 +1,9 @@
 const Discord = require("discord.js")
+const config = require("../botconfig.json")
 
 module.exports.run = async (bot, message, args) => {
     let botembed = new Discord.RichEmbed()
-        .setDescription("FaxBot full list of commands | Prefix ;")
+        .setDescription(`FaxBot full list of commands | Prefix ${config.prefix}`)
         .setColor("#00fff2")
         .addField("General", "**hello** - returns a hello message. \n **report** - Report a member to moderation, format: [@person] [reason]. \n **botinfo** - returns information about FaxBot \n")
         .addField("Memey", "**whosthesnitch** - returns a popular snitch which is in this Discord. \n **meme** - whats a meme? \n **kiss** - gives a kiss \n **whocancode** - tells us who can code \n")
